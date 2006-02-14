@@ -1,10 +1,10 @@
 Summary:	Ruby webserver toolkit
 Name:		ruby-mongrel
-Version:	0.3.1
+Version:	0.3.2
 Release:	1
 License:	Ruby
-Source0:	http://rubyforge.org/frs/download.php/8538/mongrel-%{version}.tgz
-# Source0-md5:	fa8b9ca1d256ec125dae8e5cde58a4cd
+Source0:	http://rubyforge.org/frs/download.php/8590/mongrel-%{version}.tgz
+# Source0-md5:	e0e091d344fe46ae98f9f93ba9bbcbea
 Group:		Development/Libraries
 URL:		http://mongrel.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.277
