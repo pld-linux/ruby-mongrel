@@ -1,4 +1,5 @@
 Summary:	Ruby webserver toolkit
+Summary(pl):	Toolkit jêzyka Ruby dla serwera WWW
 Name:		ruby-mongrel
 Version:	0.3.3
 Release:	1
@@ -14,6 +15,10 @@ BuildRequires:	ruby-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
+Ruby webserver toolkit.
+
+%description -l pl
+Toolkit jêzyka Ruby dla serwera WWW.
 
 %prep
 %setup -q -n mongrel-%{version}
@@ -35,5 +40,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
 %{ruby_rubylibdir}/*.rb
-%{ruby_rubylibdir}/mongrel/
+%{ruby_rubylibdir}/mongrel
 %attr(755,root,root) %{ruby_archdir}/*.so
