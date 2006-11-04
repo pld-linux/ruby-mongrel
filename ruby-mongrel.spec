@@ -4,10 +4,10 @@ Name:		ruby-mongrel
 Version:	0.3.13.4
 Release:	1
 License:	Ruby
-Source0:	http://rubyforge.org/frs/download.php/13231/mongrel-0.3.13.4.gem
-# Source0-md5:	3fc1970ca01d06c39c2b40e503f07b88
-Patch0:	%{name}-nogems.patch
 Group:		Development/Libraries
+Source0:	http://rubyforge.org/frs/download.php/13231/mongrel-%{version}.gem
+# Source0-md5:	3fc1970ca01d06c39c2b40e503f07b88
+Patch0:		%{name}-nogems.patch
 URL:		http://mongrel.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
@@ -22,7 +22,7 @@ Ruby webserver toolkit.
 Toolkit jêzyka Ruby dla serwera WWW.
 
 %prep
-%setup -q -c
+%setup -q -c -T
 tar xf %{SOURCE0} -O data.tar.gz | tar xzv-
 %patch0 -p1
 
