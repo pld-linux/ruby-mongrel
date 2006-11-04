@@ -1,11 +1,12 @@
 Summary:	Ruby webserver toolkit
 Summary(pl):	Toolkit jêzyka Ruby dla serwera WWW
 Name:		ruby-mongrel
-Version:	0.3.3
+Version:	0.3.13.4
 Release:	1
 License:	Ruby
-Source0:	http://rubyforge.org/frs/download.php/8600/mongrel-%{version}.tgz
-# Source0-md5:	4adb811d349e14403de9672572eaa059
+Source0:	http://rubyforge.org/frs/download.php/13231/mongrel-0.3.13.4.gem
+# Source0-md5:	3fc1970ca01d06c39c2b40e503f07b88
+Patch0:	%{name}-nogems.patch
 Group:		Development/Libraries
 URL:		http://mongrel.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.277
@@ -21,7 +22,9 @@ Ruby webserver toolkit.
 Toolkit jêzyka Ruby dla serwera WWW.
 
 %prep
-%setup -q -n mongrel-%{version}
+%setup -q -c
+tar xf %{SOURCE0} -O data.tar.gz | tar xzv-
+%patch0 -p1
 
 %build
 ruby setup.rb config --rbdir=%{ruby_rubylibdir} --sodir=%{ruby_archdir}
