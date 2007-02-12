@@ -1,5 +1,5 @@
 Summary:	Ruby webserver toolkit
-Summary(pl.UTF-8):   Toolkit języka Ruby dla serwera WWW
+Summary(pl.UTF-8):	Toolkit języka Ruby dla serwera WWW
 Name:		ruby-mongrel
 Version:	0.3.20
 Release:	1
