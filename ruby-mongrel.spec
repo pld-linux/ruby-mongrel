@@ -5,7 +5,7 @@ Version:	1.0.1
 Release:	1
 License:	Ruby
 Group:		Development/Libraries
-Source0:	http://mongrel.rubyforge.org/releases/gems/mongrel-1.0.1.gem
+Source0:	http://mongrel.rubyforge.org/releases/gems/mongrel-%{version}.gem
 # Source0-md5:	ae2a35c47b568c8957f41ca2ce4ac17a
 Patch0:		%{name}-nogems.patch
 URL:		http://mongrel.rubyforge.org/
