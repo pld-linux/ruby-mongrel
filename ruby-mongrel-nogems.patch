@@ -1,54 +1,6 @@
-diff -ur ruby-mongrel-0.3.20-o/bin/mongrel_rails ruby-mongrel-0.3.20/bin/mongrel_rails
---- ruby-mongrel-0.3.20-o/bin/mongrel_rails	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/bin/mongrel_rails	2006-12-17 13:43:38.000000000 -0700
-@@ -4,7 +4,6 @@
- # Additional work donated by contributors.  See http://mongrel.rubyforge.org/attributions.html 
- # for more information.
- 
--require 'rubygems'
- require 'yaml'
- require 'mongrel'
- require 'mongrel/rails'
-diff -ur ruby-mongrel-0.3.20-o/doc/rdoc/files/lib/mongrel/command_rb.html ruby-mongrel-0.3.20/doc/rdoc/files/lib/mongrel/command_rb.html
---- ruby-mongrel-0.3.20-o/doc/rdoc/files/lib/mongrel/command_rb.html	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/doc/rdoc/files/lib/mongrel/command_rb.html	2006-12-17 13:43:41.000000000 -0700
-@@ -85,7 +85,6 @@
-       <h3 class="section-bar">Required files</h3>
- 
-       <div class="name-list">
--      rubygems&nbsp;&nbsp;
-       singleton&nbsp;&nbsp;
-       optparse&nbsp;&nbsp;
-       gem_plugin&nbsp;&nbsp;
-@@ -120,4 +119,4 @@
- </div>
- 
- </body>
--</html>
-\ No newline at end of file
-+</html>
-diff -ur ruby-mongrel-0.3.20-o/doc/rdoc/files/lib/mongrel/init_rb.html ruby-mongrel-0.3.20/doc/rdoc/files/lib/mongrel/init_rb.html
---- ruby-mongrel-0.3.20-o/doc/rdoc/files/lib/mongrel/init_rb.html	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/doc/rdoc/files/lib/mongrel/init_rb.html	2006-12-17 13:43:41.000000000 -0700
-@@ -85,8 +85,6 @@
-       <h3 class="section-bar">Required files</h3>
- 
-       <div class="name-list">
--      rubygems&nbsp;&nbsp;
--      gem_plugin&nbsp;&nbsp;
-       </div>
-     </div>
- 
-@@ -118,4 +116,4 @@
- </div>
- 
- </body>
--</html>
-\ No newline at end of file
-+</html>
-diff -ur ruby-mongrel-0.3.20-o/examples/camping/blog.rb ruby-mongrel-0.3.20/examples/camping/blog.rb
---- ruby-mongrel-0.3.20-o/examples/camping/blog.rb	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/examples/camping/blog.rb	2006-12-17 13:43:45.000000000 -0700
+diff -ur ruby-mongrel-1.1.1-o/examples/camping/blog.rb ruby-mongrel-1.1.1/examples/camping/blog.rb
+--- ruby-mongrel-1.1.1-o/examples/camping/blog.rb	2007-12-12 15:22:49.000000000 -0700
++++ ruby-mongrel-1.1.1/examples/camping/blog.rb	2007-12-12 15:50:47.000000000 -0700
 @@ -1,8 +1,6 @@
  #!/usr/bin/env ruby
  
@@ -58,9 +10,9 @@ diff -ur ruby-mongrel-0.3.20-o/examples/camping/blog.rb ruby-mongrel-0.3.20/exam
  require 'camping/session'
    
  Camping.goes :Blog
-diff -ur ruby-mongrel-0.3.20-o/examples/camping/tepee.rb ruby-mongrel-0.3.20/examples/camping/tepee.rb
---- ruby-mongrel-0.3.20-o/examples/camping/tepee.rb	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/examples/camping/tepee.rb	2006-12-17 13:43:45.000000000 -0700
+diff -ur ruby-mongrel-1.1.1-o/examples/camping/tepee.rb ruby-mongrel-1.1.1/examples/camping/tepee.rb
+--- ruby-mongrel-1.1.1-o/examples/camping/tepee.rb	2007-12-12 15:22:49.000000000 -0700
++++ ruby-mongrel-1.1.1/examples/camping/tepee.rb	2007-12-12 15:50:47.000000000 -0700
 @@ -1,6 +1,6 @@
  #!/usr/bin/ruby
  $:.unshift File.dirname(__FILE__) + "/../../lib"
@@ -69,73 +21,58 @@ diff -ur ruby-mongrel-0.3.20-o/examples/camping/tepee.rb ruby-mongrel-0.3.20/exa
  
  Camping.goes :Tepee
  
-diff -ur ruby-mongrel-0.3.20-o/examples/mongrel_simple_service.rb ruby-mongrel-0.3.20/examples/mongrel_simple_service.rb
---- ruby-mongrel-0.3.20-o/examples/mongrel_simple_service.rb	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/examples/mongrel_simple_service.rb	2006-12-17 13:43:45.000000000 -0700
+diff -ur ruby-mongrel-1.1.1-o/examples/mongrel_simple_service.rb ruby-mongrel-1.1.1/examples/mongrel_simple_service.rb
+--- ruby-mongrel-1.1.1-o/examples/mongrel_simple_service.rb	2007-12-12 15:22:49.000000000 -0700
++++ ruby-mongrel-1.1.1/examples/mongrel_simple_service.rb	2007-12-12 15:50:47.000000000 -0700
 @@ -1,5 +1,4 @@
  # This script emualtes script/server behavior but running webrick http server 
 -require 'rubygems'
  
  require 'mongrel'
  require 'yaml'
-diff -ur ruby-mongrel-0.3.20-o/lib/mongrel/command.rb ruby-mongrel-0.3.20/lib/mongrel/command.rb
---- ruby-mongrel-0.3.20-o/lib/mongrel/command.rb	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/lib/mongrel/command.rb	2006-12-17 13:43:45.000000000 -0700
-@@ -4,10 +4,8 @@
- # Additional work donated by contributors.  See http://mongrel.rubyforge.org/attributions.html 
- # for more information.
- 
--require 'rubygems'
- require 'singleton'
- require 'optparse'
--require 'gem_plugin'
- 
- module Mongrel
- 
-@@ -147,9 +145,10 @@
+diff -ur ruby-mongrel-1.1.1-o/lib/mongrel/command.rb ruby-mongrel-1.1.1/lib/mongrel/command.rb
+--- ruby-mongrel-1.1.1-o/lib/mongrel/command.rb	2007-12-12 15:22:50.000000000 -0700
++++ ruby-mongrel-1.1.1/lib/mongrel/command.rb	2007-12-12 15:50:47.000000000 -0700
+@@ -148,6 +148,7 @@
  
        # Builds a list of possible commands from the Command derivates list
        def commands
--        pmgr = GemPlugin::Manager.instance
--        list = pmgr.plugins["/commands"].keys
--        return list.sort
-+        #pmgr = GemPlugin::Manager.instance
-+        #list = pmgr.plugins["/commands"].keys
-+        #return list.sort
-+				return []
-       end
- 
-       # Prints a list of available commands.
-@@ -189,7 +188,7 @@
++				return [] # Neutered
+         pmgr = GemPlugin::Manager.instance
+         list = pmgr.plugins["/commands"].keys
+         return list.sort
+@@ -190,7 +191,8 @@
              cmd_name = "mongrel::" + cmd_name
            end
  
 -          command = GemPlugin::Manager.instance.create("/commands/#{cmd_name}", :argv => args)
-+          #command = GemPlugin::Manager.instance.create("/commands/#{cmd_name}", :argv => args)
++					# Neutered
++          # command = GemPlugin::Manager.instance.create("/commands/#{cmd_name}", :argv => args)
          rescue OptionParser::InvalidOption
            STDERR.puts "#$! for command '#{cmd_name}'"
            STDERR.puts "Try #{cmd_name} -h to get help."
-diff -ur ruby-mongrel-0.3.20-o/lib/mongrel/init.rb ruby-mongrel-0.3.20/lib/mongrel/init.rb
---- ruby-mongrel-0.3.20-o/lib/mongrel/init.rb	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/lib/mongrel/init.rb	2006-12-17 13:43:45.000000000 -0700
-@@ -4,8 +4,6 @@
- # Additional work donated by contributors.  See http://mongrel.rubyforge.org/attributions.html 
- # for more information.
- 
--require 'rubygems'
--require 'gem_plugin'
- 
- # file is just a stub that makes sure the mongrel_plugins gem is loaded and ready
- 
-diff -ur ruby-mongrel-0.3.20-o/lib/mongrel.rb ruby-mongrel-0.3.20/lib/mongrel.rb
---- ruby-mongrel-0.3.20-o/lib/mongrel.rb	1969-12-31 17:00:00.000000000 -0700
-+++ ruby-mongrel-0.3.20/lib/mongrel.rb	2006-12-17 13:44:28.000000000 -0700
-@@ -6,7 +6,6 @@
- 
- $mongrel_debug_client = false
- 
--require 'rubygems'
- require 'socket'
- require 'http11'
- require 'tempfile'
-Only in ruby-mongrel-0.3.20/lib: mongrel.rb~
+diff -ur ruby-mongrel-1.1.1-o/lib/mongrel/gems.rb ruby-mongrel-1.1.1/lib/mongrel/gems.rb
+--- ruby-mongrel-1.1.1-o/lib/mongrel/gems.rb	2007-12-12 15:22:50.000000000 -0700
++++ ruby-mongrel-1.1.1/lib/mongrel/gems.rb	2007-12-12 15:51:08.000000000 -0700
+@@ -5,18 +5,11 @@
+       def require(library, version = nil)
+         begin
+           Kernel.require library
+-        rescue LoadError, RuntimeError => e
+-          begin 
+-            # ActiveSupport breaks 'require' by making it always return a true value
+-            require 'rubygems'
+-            version ? gem(library, version) : gem(library)
+-            retry
+-          rescue Gem::LoadError, LoadError, RuntimeError
++				rescue LoadError, RuntimeError
+             # puts "** #{library.inspect} could not be loaded" unless library == "mongrel_experimental"
+-          end
+         end  
+       end
+       
+     end    
+   end
+-end
+\ No newline at end of file
++end
