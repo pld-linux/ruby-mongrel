@@ -15,6 +15,8 @@ BuildRequires:	ruby-modules
 %{?ruby_mod_ver_requires_eq}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# passing CFLAGS breaks -fPIC parsing, patch mkmf module to be able to pass CC and OPTFLAgs
+
 %define	ruby_config {\
 	%{__ruby} setup.rb config \
 		--prefix=%{_prefix} \
@@ -26,7 +28,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 		--localstatedir=%{_localstatedir} \
 		--rbdir=%{ruby_rubylibdir} \
 		--sodir=%{ruby_archdir} \
-		--make-prog="%{__make} CC=\"%{__cc}\" CFLAGS=\"%{rpmcflags}\"" \
+		--make-prog="%{__make} CC=\"%{__cc}\"" \
 }
 
 %define	ruby_setup { \
