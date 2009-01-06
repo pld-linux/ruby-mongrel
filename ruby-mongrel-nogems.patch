@@ -1,4 +1,3 @@
-diff -ur ruby-mongrel-1.1.1-o/examples/camping/blog.rb ruby-mongrel-1.1.1/examples/camping/blog.rb
 --- ruby-mongrel-1.1.1-o/examples/camping/blog.rb	2007-12-12 15:22:49.000000000 -0700
 +++ ruby-mongrel-1.1.1/examples/camping/blog.rb	2007-12-12 15:50:47.000000000 -0700
 @@ -1,8 +1,6 @@
@@ -10,7 +9,6 @@ diff -ur ruby-mongrel-1.1.1-o/examples/camping/blog.rb ruby-mongrel-1.1.1/exampl
  require 'camping/session'
    
  Camping.goes :Blog
-diff -ur ruby-mongrel-1.1.1-o/examples/camping/tepee.rb ruby-mongrel-1.1.1/examples/camping/tepee.rb
 --- ruby-mongrel-1.1.1-o/examples/camping/tepee.rb	2007-12-12 15:22:49.000000000 -0700
 +++ ruby-mongrel-1.1.1/examples/camping/tepee.rb	2007-12-12 15:50:47.000000000 -0700
 @@ -1,6 +1,6 @@
@@ -21,7 +19,6 @@ diff -ur ruby-mongrel-1.1.1-o/examples/camping/tepee.rb ruby-mongrel-1.1.1/examp
  
  Camping.goes :Tepee
  
-diff -ur ruby-mongrel-1.1.1-o/examples/mongrel_simple_service.rb ruby-mongrel-1.1.1/examples/mongrel_simple_service.rb
 --- ruby-mongrel-1.1.1-o/examples/mongrel_simple_service.rb	2007-12-12 15:22:49.000000000 -0700
 +++ ruby-mongrel-1.1.1/examples/mongrel_simple_service.rb	2007-12-12 15:50:47.000000000 -0700
 @@ -1,5 +1,4 @@
@@ -30,7 +27,6 @@ diff -ur ruby-mongrel-1.1.1-o/examples/mongrel_simple_service.rb ruby-mongrel-1.
  
  require 'mongrel'
  require 'yaml'
-diff -ur ruby-mongrel-1.1.1-o/lib/mongrel/command.rb ruby-mongrel-1.1.1/lib/mongrel/command.rb
 --- ruby-mongrel-1.1.1-o/lib/mongrel/command.rb	2007-12-12 15:22:50.000000000 -0700
 +++ ruby-mongrel-1.1.1/lib/mongrel/command.rb	2007-12-12 15:50:47.000000000 -0700
 @@ -148,6 +148,7 @@
@@ -51,7 +47,6 @@ diff -ur ruby-mongrel-1.1.1-o/lib/mongrel/command.rb ruby-mongrel-1.1.1/lib/mong
          rescue OptionParser::InvalidOption
            STDERR.puts "#$! for command '#{cmd_name}'"
            STDERR.puts "Try #{cmd_name} -h to get help."
-diff -ur ruby-mongrel-1.1.1-o/lib/mongrel/gems.rb ruby-mongrel-1.1.1/lib/mongrel/gems.rb
 --- ruby-mongrel-1.1.1-o/lib/mongrel/gems.rb	2007-12-12 15:22:50.000000000 -0700
 +++ ruby-mongrel-1.1.1/lib/mongrel/gems.rb	2007-12-12 15:51:08.000000000 -0700
 @@ -5,18 +5,11 @@
