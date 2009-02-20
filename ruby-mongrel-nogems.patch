@@ -1,5 +1,22 @@
---- ruby-mongrel-1.1.1-o/examples/camping/blog.rb	2007-12-12 15:22:49.000000000 -0700
-+++ ruby-mongrel-1.1.1/examples/camping/blog.rb	2007-12-12 15:50:47.000000000 -0700
+diff -Nur ruby-mongrel-1.1.5.orig/bin/mongrel_rails ruby-mongrel-1.1.5.nogems/bin/mongrel_rails
+--- ruby-mongrel-1.1.5.orig/bin/mongrel_rails	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/bin/mongrel_rails	2009-02-20 09:32:44.000000000 -0700
+@@ -1,3 +1,4 @@
++#!/usr/bin/ruby
+ # Copyright (c) 2005 Zed A. Shaw
+ # You can redistribute it and/or modify it under the same terms as Ruby.
+ #
+@@ -7,7 +8,6 @@
+ require 'yaml'
+ require 'etc'
+ 
+-$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
+ require 'mongrel'
+ require 'mongrel/rails'
+ 
+diff -Nur ruby-mongrel-1.1.5.orig/examples/camping/blog.rb ruby-mongrel-1.1.5.nogems/examples/camping/blog.rb
+--- ruby-mongrel-1.1.5.orig/examples/camping/blog.rb	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/examples/camping/blog.rb	2009-02-20 09:32:44.000000000 -0700
 @@ -1,8 +1,6 @@
  #!/usr/bin/env ruby
  
@@ -9,8 +26,9 @@
  require 'camping/session'
    
  Camping.goes :Blog
---- ruby-mongrel-1.1.1-o/examples/camping/tepee.rb	2007-12-12 15:22:49.000000000 -0700
-+++ ruby-mongrel-1.1.1/examples/camping/tepee.rb	2007-12-12 15:50:47.000000000 -0700
+diff -Nur ruby-mongrel-1.1.5.orig/examples/camping/tepee.rb ruby-mongrel-1.1.5.nogems/examples/camping/tepee.rb
+--- ruby-mongrel-1.1.5.orig/examples/camping/tepee.rb	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/examples/camping/tepee.rb	2009-02-20 09:32:44.000000000 -0700
 @@ -1,6 +1,6 @@
  #!/usr/bin/ruby
  $:.unshift File.dirname(__FILE__) + "/../../lib"
@@ -19,16 +37,155 @@
  
  Camping.goes :Tepee
  
---- ruby-mongrel-1.1.1-o/examples/mongrel_simple_service.rb	2007-12-12 15:22:49.000000000 -0700
-+++ ruby-mongrel-1.1.1/examples/mongrel_simple_service.rb	2007-12-12 15:50:47.000000000 -0700
-@@ -1,5 +1,4 @@
+diff -Nur ruby-mongrel-1.1.5.orig/examples/mongrel_simple_service.rb ruby-mongrel-1.1.5.nogems/examples/mongrel_simple_service.rb
+--- ruby-mongrel-1.1.5.orig/examples/mongrel_simple_service.rb	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/examples/mongrel_simple_service.rb	2009-02-20 09:33:09.000000000 -0700
+@@ -1,6 +1,4 @@
  # This script emualtes script/server behavior but running webrick http server 
 -require 'rubygems'
- 
+-
  require 'mongrel'
  require 'yaml'
---- ruby-mongrel-1.1.1-o/lib/mongrel/command.rb	2007-12-12 15:22:50.000000000 -0700
-+++ ruby-mongrel-1.1.1/lib/mongrel/command.rb	2007-12-12 15:50:47.000000000 -0700
+ require 'zlib'
+diff -Nur ruby-mongrel-1.1.5.orig/examples/mongrel_simple_service.rb.orig ruby-mongrel-1.1.5.nogems/examples/mongrel_simple_service.rb.orig
+--- ruby-mongrel-1.1.5.orig/examples/mongrel_simple_service.rb.orig	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/examples/mongrel_simple_service.rb.orig	1969-12-31 17:00:00.000000000 -0700
+@@ -0,0 +1,116 @@
++# This script emualtes script/server behavior but running webrick http server 
++require 'rubygems'
++
++require 'mongrel'
++require 'yaml'
++require 'zlib'
++
++require 'win32/service'
++
++DEBUG_LOG_FILE = File.expand_path(File.dirname(__FILE__) + '/debug.log') 
++
++class SimpleHandler < Mongrel::HttpHandler
++    def process(request, response)
++      response.start do |head,out|
++        head["Content-Type"] = "text/html"
++        results = "<html><body>Your request:<br /><pre>#{request.params.to_yaml}</pre><a href=\"/files\">View the files.</a></body></html>"
++        if request.params["HTTP_ACCEPT_ENCODING"] == "gzip,deflate"
++          head["Content-Encoding"] = "deflate"
++          # send it back deflated
++          out << Zlib::Deflate.deflate(results)
++        else
++          # no gzip supported, send it back normal
++          out << results
++        end
++      end
++    end
++end
++
++class MongrelDaemon < Win32::Daemon
++  def initialize(options)
++    @options = options
++  end
++  
++  def service_init
++    File.open(DEBUG_LOG_FILE,"a+") { |f| f.puts("#{Time.now} - service_init entered") }
++
++    File.open(DEBUG_LOG_FILE,"a+") { |f| f.puts("Mongrel running on #{@options[:ip]}:#{@options[:port]} with docroot #{@options[:server_root]}") } 
++
++    @simple = SimpleHandler.new
++    @files = Mongrel::DirHandler.new(@options[:server_root])
++
++    @http_server = Mongrel::HttpServer.new(@options[:ip], @options[:port])
++    @http_server.register("/", @simple)
++    @http_server.register("/files", @files)
++
++    File.open(DEBUG_LOG_FILE,"a+") { |f| f.puts("#{Time.now} - service_init left") }
++  end
++  
++  def service_stop
++    File.open(DEBUG_LOG_FILE,"a+"){ |f|
++      f.puts "stop signal received: " + Time.now.to_s
++      f.puts "sending stop to mongrel threads: " + Time.now.to_s
++    }
++    #@http_server.stop
++  end
++
++  def service_pause
++    File.open(DEBUG_LOG_FILE,"a+"){ |f|
++      f.puts "pause signal received: " + Time.now.to_s
++    }
++  end
++  
++  def service_resume
++    File.open(DEBUG_LOG_FILE,"a+"){ |f|
++      f.puts "continue/resume signal received: " + Time.now.to_s
++    }
++  end
++
++  def service_main
++    File.open(DEBUG_LOG_FILE,"a+") { |f| f.puts("#{Time.now} - service_main entered") }
++    
++    begin
++      File.open(DEBUG_LOG_FILE,"a+") { |f| f.puts("#{Time.now} - http_server.run") }
++      @http_server.run
++    
++      # No runner thread was needed after all!
++      #@runner = Thread.new do
++      #  @http_server.acceptor.join
++      #end
++      #File.open("d:\\test.log","a+") { |f| f.puts("#{Time.now} - runner.run") }
++      #@runner.run
++      
++      # here is where magic happens!
++      # if put blocking code here, the thread never left service_main, and the rb_func_call in service.c
++      # never exit, even if the stop signal is received.
++      #
++      # to probe my theory, just comment the while loop and remove the '1' from sleep function
++      # service start ok, but fail to stop.
++      #
++      # Even if no functional code is in service_main (because we have other working threads),
++      # we must monitor the state of the service to exit when the STOP event is received.
++      #
++      # Note: maybe not loop in 1 second intervals?
++      while state == RUNNING
++        sleep 1
++      end
++      
++    rescue StandardError, Exception, interrupt  => err
++      File.open(DEBUG_LOG_FILE,"a+"){ |f| f.puts("#{Time.now} - Error: #{err}") }
++      File.open(DEBUG_LOG_FILE,"a+"){ |f| f.puts("BACKTRACE: " + err.backtrace.join("\n")) }
++      
++    end
++    
++    File.open(DEBUG_LOG_FILE,"a+") { |f| f.puts("#{Time.now} - service_main left") }
++  end
++  
++end
++
++OPTIONS = {
++  :port            => 3000,
++  :ip              => "0.0.0.0",
++  :server_root     => File.expand_path(File.dirname(__FILE__)),
++}
++
++web_server = MongrelDaemon.new(OPTIONS)
++web_server.mainloop
+diff -Nur ruby-mongrel-1.1.5.orig/examples/mongrel_simple_service.rb.rej ruby-mongrel-1.1.5.nogems/examples/mongrel_simple_service.rb.rej
+--- ruby-mongrel-1.1.5.orig/examples/mongrel_simple_service.rb.rej	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/examples/mongrel_simple_service.rb.rej	2009-02-20 09:32:44.000000000 -0700
+@@ -0,0 +1,12 @@
++***************
++*** 1,5 ****
++  # This script emualtes script/server behavior but running webrick http server 
++- require 'rubygems'
++  
++  require 'mongrel'
++  require 'yaml'
++--- 1,4 ----
++  # This script emualtes script/server behavior but running webrick http server 
++  
++  require 'mongrel'
++  require 'yaml'
+diff -Nur ruby-mongrel-1.1.5.orig/lib/mongrel/command.rb ruby-mongrel-1.1.5.nogems/lib/mongrel/command.rb
+--- ruby-mongrel-1.1.5.orig/lib/mongrel/command.rb	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/lib/mongrel/command.rb	2009-02-20 09:32:44.000000000 -0700
 @@ -148,6 +148,7 @@
  
        # Builds a list of possible commands from the Command derivates list
@@ -47,42 +204,91 @@
          rescue OptionParser::InvalidOption
            STDERR.puts "#$! for command '#{cmd_name}'"
            STDERR.puts "Try #{cmd_name} -h to get help."
---- ruby-mongrel-1.1.1-o/lib/mongrel/gems.rb	2007-12-12 15:22:50.000000000 -0700
-+++ ruby-mongrel-1.1.1/lib/mongrel/gems.rb	2007-12-12 15:51:08.000000000 -0700
-@@ -5,18 +5,11 @@
-       def require(library, version = nil)
-         begin
-           Kernel.require library
--        rescue LoadError, RuntimeError => e
--          begin 
--            # ActiveSupport breaks 'require' by making it always return a true value
--            require 'rubygems'
+diff -Nur ruby-mongrel-1.1.5.orig/lib/mongrel/gems.rb ruby-mongrel-1.1.5.nogems/lib/mongrel/gems.rb
+--- ruby-mongrel-1.1.5.orig/lib/mongrel/gems.rb	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/lib/mongrel/gems.rb	2009-02-20 09:39:02.000000000 -0700
+@@ -9,9 +9,12 @@
+           begin 
+             # ActiveSupport breaks 'require' by making it always return a true value
+             Kernel.require 'rubygems'
 -            version ? gem(library, version) : gem(library)
 -            retry
 -          rescue Gem::LoadError, LoadError, RuntimeError
-+				rescue LoadError, RuntimeError
++						begin
++							version ? gem(library, version) : gem(library)
++						rescue Gem::LoadError
++						end
++						retry
++          rescue LoadError, RuntimeError
              # puts "** #{library.inspect} could not be loaded" unless library == "mongrel_experimental"
--          end
+           end
          end  
-       end
+@@ -19,4 +22,4 @@
        
      end    
    end
 -end
 \ No newline at end of file
 +end
---- ruby-mongrel-1.1.1/bin/mongrel_rails	2009-01-06 12:13:01.319194471 +0200
-+++ ruby-mongrel-1.1.1/bin/mongrel_rails	2009-01-06 12:01:03.260437829 +0200
-@@ -1,3 +1,4 @@
-+#!/usr/bin/ruby
- # Copyright (c) 2005 Zed A. Shaw
- # You can redistribute it and/or modify it under the same terms as Ruby.
- #
-@@ -7,7 +8,6 @@
- require 'yaml'
- require 'etc'
- 
--$LOAD_PATH.unshift "#{File.dirname(__FILE__)}/../lib"
- require 'mongrel'
- require 'mongrel/rails'
- 
+diff -Nur ruby-mongrel-1.1.5.orig/lib/mongrel/gems.rb.orig ruby-mongrel-1.1.5.nogems/lib/mongrel/gems.rb.orig
+--- ruby-mongrel-1.1.5.orig/lib/mongrel/gems.rb.orig	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/lib/mongrel/gems.rb.orig	1969-12-31 17:00:00.000000000 -0700
+@@ -0,0 +1,22 @@
++module Mongrel
++  module Gems
++    class << self
++    
++      def require(library, version = nil)
++        begin
++          Kernel.require library
++        rescue LoadError, RuntimeError => e
++          begin 
++            # ActiveSupport breaks 'require' by making it always return a true value
++            Kernel.require 'rubygems'
++            version ? gem(library, version) : gem(library)
++            retry
++          rescue Gem::LoadError, LoadError, RuntimeError
++            # puts "** #{library.inspect} could not be loaded" unless library == "mongrel_experimental"
++          end
++        end  
++      end
++      
++    end    
++  end
++end
+\ No newline at end of file
+diff -Nur ruby-mongrel-1.1.5.orig/lib/mongrel/gems.rb.rej ruby-mongrel-1.1.5.nogems/lib/mongrel/gems.rb.rej
+--- ruby-mongrel-1.1.5.orig/lib/mongrel/gems.rb.rej	1969-12-31 17:00:00.000000000 -0700
++++ ruby-mongrel-1.1.5.nogems/lib/mongrel/gems.rb.rej	2009-02-20 09:32:44.000000000 -0700
+@@ -0,0 +1,31 @@
++***************
++*** 5,22 ****
++        def require(library, version = nil)
++          begin
++            Kernel.require library
++-         rescue LoadError, RuntimeError => e
++-           begin 
++-             # ActiveSupport breaks 'require' by making it always return a true value
++-             require 'rubygems'
++-             version ? gem(library, version) : gem(library)
++-             retry
++-           rescue Gem::LoadError, LoadError, RuntimeError
++              # puts "** #{library.inspect} could not be loaded" unless library == "mongrel_experimental"
++-           end
++          end  
++        end
++        
++      end    
++    end
++- end--- 5,15 ----
++        def require(library, version = nil)
++          begin
++            Kernel.require library
+++ 				rescue LoadError, RuntimeError
++              # puts "** #{library.inspect} could not be loaded" unless library == "mongrel_experimental"
++          end  
++        end
++        
++      end    
++    end
+++ end
