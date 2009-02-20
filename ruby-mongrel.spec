@@ -1,12 +1,12 @@
 Summary:	Ruby webserver toolkit
 Summary(pl.UTF-8):	Toolkit języka Ruby dla serwera WWW
 Name:		ruby-mongrel
-Version:	1.1.1
-Release:	3
+Version:	1.1.5
+Release:	1
 License:	Ruby
 Group:		Development/Libraries
-Source0:	http://mongrel.rubyforge.org/releases/gems/mongrel-%{version}.gem
-# Source0-md5:	6abbf97ba32a24614230076bfc77034b
+Source0:	http://gems.rubyforge.org/gems/mongrel-%{version}.gem
+# Source0-md5:	a37617eb48f0932cc32143b2d76c0d12
 Patch0:		%{name}-nogems.patch
 URL:		http://mongrel.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.277
