@@ -2,13 +2,14 @@ Summary:	Ruby webserver toolkit
 Summary(pl.UTF-8):	Toolkit języka Ruby dla serwera WWW
 Name:		ruby-mongrel
 Version:	1.1.5
-Release:	2
+Release:	3
 License:	Ruby
 Group:		Development/Libraries
 Source0:	http://gems.rubyforge.org/gems/mongrel-%{version}.gem
 # Source0-md5:	a37617eb48f0932cc32143b2d76c0d12
 Patch0:		%{name}-nogems.patch
 URL:		http://mongrel.rubyforge.org/
+BuildRequires:	dos2unix
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
 BuildRequires:	ruby-modules
@@ -48,6 +49,7 @@ Toolkit języka Ruby dla serwera WWW.
 %prep
 %setup -q -c -T
 tar xf %{SOURCE0} -O data.tar.gz | tar xz
+dos2unix examples/mongrel_simple_service.rb
 %patch0 -p1
 
 find -name '*.rb' -print0 | xargs -0 %{__sed} -i -e 's,\r$,,'
