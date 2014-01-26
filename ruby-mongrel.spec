@@ -10,10 +10,12 @@ Source0:	http://gems.rubyforge.org/gems/%{pkgname}-%{version}.gem
 # Source0-md5:	a37617eb48f0932cc32143b2d76c0d12
 Patch0:		%{name}-nogems.patch
 Patch1:		%{name}-ruby1.9.patch
+Patch2:		format-security.patch
 URL:		http://mongrel.rubyforge.org/
 BuildRequires:	dos2unix
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
+BuildRequires:	ruby-irb
 BuildRequires:	ruby-modules
 %{?ruby_mod_ver_requires_eq}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -55,6 +57,7 @@ find -newer README  -o -print | xargs touch --reference %{SOURCE0}
 dos2unix examples/mongrel_simple_service.rb
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 find -name '*.rb' -print0 | xargs -0 %{__sed} -i -e 's,\r$,,'
 
