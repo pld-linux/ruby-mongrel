@@ -17,7 +17,6 @@ BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
 BuildRequires:	ruby-irb
 BuildRequires:	ruby-modules
-%{?ruby_mod_ver_requires_eq}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -31,6 +30,9 @@ Summary:	HTML documentation for %{pkgname}
 Summary(pl.UTF-8):	Dokumentacja w formacie HTML dla %{pkgname}
 Group:		Documentation
 Requires:	ruby >= 1:1.8.7-4
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description rdoc
 HTML documentation for %{pkgname}.
@@ -43,6 +45,9 @@ Summary:	ri documentation for %{pkgname}
 Summary(pl.UTF-8):	Dokumentacja w formacie ri dla %{pkgname}
 Group:		Documentation
 Requires:	ruby
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description ri
 ri documentation for %{pkgname}.
