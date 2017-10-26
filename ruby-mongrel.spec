@@ -3,20 +3,21 @@ Summary:	Ruby webserver toolkit
 Summary(pl.UTF-8):	Toolkit języka Ruby dla serwera WWW
 Name:		ruby-%{pkgname}
 Version:	1.1.5
-Release:	9
+Release:	10
 License:	Ruby
 Group:		Development/Libraries
-Source0:	http://gems.rubyforge.org/gems/%{pkgname}-%{version}.gem
+Source0:	https://rubygems.org/downloads/%{pkgname}-%{version}.gem
 # Source0-md5:	a37617eb48f0932cc32143b2d76c0d12
 Patch0:		%{name}-nogems.patch
 Patch1:		%{name}-ruby1.9.patch
 Patch2:		format-security.patch
-URL:		http://mongrel.rubyforge.org/
+URL:		https://rubygems.org/gems/mongrel
 BuildRequires:	dos2unix
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby-devel
 BuildRequires:	ruby-irb
 BuildRequires:	ruby-modules
+BuildRequires:	setup.rb >= 3.4.1-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -65,6 +66,8 @@ dos2unix examples/mongrel_simple_service.rb
 %patch2 -p1
 
 find -name '*.rb' -print0 | xargs -0 %{__sed} -i -e 's,\r$,,'
+
+cp %{_datadir}/setup.rb .
 
 %build
 # passing CFLAGS breaks -fPIC parsing,
