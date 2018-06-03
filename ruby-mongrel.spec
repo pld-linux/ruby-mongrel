@@ -3,7 +3,7 @@ Summary:	Ruby webserver toolkit
 Summary(pl.UTF-8):	Toolkit języka Ruby dla serwera WWW
 Name:		ruby-%{pkgname}
 Version:	1.1.5
-Release:	10
+Release:	11
 License:	Ruby
 Group:		Development/Libraries
 Source0:	https://rubygems.org/downloads/%{pkgname}-%{version}.gem
