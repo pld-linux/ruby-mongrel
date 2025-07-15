@@ -57,9 +57,9 @@ Dokumentacji w formacie ri dla %{pkgname}.
 %{__tar} xf %{SOURCE0} -O data.tar.gz | %{__tar} xz
 find -newer README  -o -print | xargs touch --reference %{SOURCE0}
 dos2unix examples/mongrel_simple_service.rb
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 find -name '*.rb' -print0 | xargs -0 %{__sed} -i -e 's,\r$,,'
 
